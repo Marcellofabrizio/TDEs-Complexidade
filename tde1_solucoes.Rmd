@@ -109,8 +109,8 @@ Assim vamos resolver a complexidade do **for j** interno
 ```
 void Moo(int N)
 {
-      for (2**y = 1; 2**y <= N; y++)
-            for (2**k = 2; 2**k <= 2**y; k++)
+      for (2^y = 1; 2^y <= N; y++)
+            for (2^k = 2; 2^k <= 2^y; k++)
                   // op fundamental
 }
 ```
@@ -119,17 +119,19 @@ E podemos simplificar ainda mais,
 void Moo(int N)
 {
       for (y = 0; y <= logN; y++)
-            for (k = 1; k <= log2**y; k++)
+            for (k = 1; k <= log2^y; k++)
                   // op fundamental
 }
 ```
 Dessa forma teremos o laço interno como
-$$log_22^y-1 = y-1$$
+$$log_22^y = y$$
 E temos o laço externo como
 $$log_2N$$
-Assim teremos a complexidade de **for k** e **for y** como
-$$O(log_2N*(y-1))$$
-como essa complexidade é dependente de uma variável de controle, precisaremos resolver sua somatória
-$$\sum_{y=0}^{log_2N} log_2N*(y-1)$$
-$$=log_2N*\sum_{y=0}^{log_2N} y-1$$
-$$=log_2N*(\sum_{y=0}^{log_2N} y - \sum_{y=0}^{log_2N} 1)$$
+Assim teremos a complexidade interna de **for y** como
+$$O(y)$$
+como essa complexidade é dependente de uma variável de controle **y**, precisaremos resolver seu somatório
+$$\sum_{y=0}^{log_2N} y$$
+$\sum_{y=0}^{log_2N} y$ pode ser representado como uma progressão aritimética, assim teremos
+$$(log_2N^2 + log_2N)/2$$
+Sendo assim, a complexidade do trecho 3 é igual a
+$$O((log_2N^2 + log_2N)/2)$$
