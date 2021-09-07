@@ -85,7 +85,7 @@ $$\sum_{i=0}^{n-1} n-1 + \sum_{i=0}^{n-1} (n-(i+1))*(n-i))$$
 (Não consegui encontrar uma fórmula simplificada para a somatória da segunda complexidade)
 
 ### Trecho 3
-(considere a operação $log$ como $log_2$)
+(consideremos a operação $log$ como $log_2$)
 ```
 void Moo(int N)
 {
@@ -103,7 +103,9 @@ void Moo(int N)
                  // op fundamental
 }
 ```
-Para resolver a complexidade do trecho de código acima, como suas variáveis de controle não são incrementadas for um a cada iterção, **i** e **j** serão substituidas por $2^y$ e $2^k$ respectivamente. Assim teremos
+Para resolver a complexidade do trecho de código acima, como suas variáveis de controle não são incrementadas for um a cada iterção, **i** e **j** serão substituidas por $2^y$ e $2^k$ respectivamente. 
+
+Assim vamos resolver a complexidade do **for j** interno
 ```
 void Moo(int N)
 {
@@ -112,7 +114,7 @@ void Moo(int N)
                   // op fundamental
 }
 ```
-E podemos simplificar ainda mais, chegando ao trecho final: (considere)
+E podemos simplificar ainda mais,
 ```
 void Moo(int N)
 {
@@ -122,10 +124,12 @@ void Moo(int N)
 }
 ```
 Dessa forma teremos o laço interno como
-$$\sum_{k=1}^{log_2N}log_22^k = \sum_{k=1}^{log_2N}k$$
+$$log_22^y-1 = y-1$$
 E temos o laço externo como
 $$log_2N$$
-Podemos simplificar o resultado que obtivemos do laço interno para
-$$(log_2N + 1)/2$$
-e então multiplicamos pelo resultado do laço externo para chegarmos a equação de complexidade
-$$((log_2N)^2 + log_2N)/2$$
+Assim teremos a complexidade de **for k** e **for y** como
+$$O(log_2N*(y-1))$$
+como essa complexidade é dependente de uma variável de controle, precisaremos resolver sua somatória
+$$\sum_{y=0}^{log_2N} log_2N*(y-1)$$
+$$=log_2N*\sum_{y=0}^{log_2N} y-1$$
+$$=log_2N*(\sum_{y=0}^{log_2N} y - \sum_{y=0}^{log_2N} 1)$$

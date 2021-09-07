@@ -13,23 +13,9 @@ int main()
 
       int i, j, k;
 
-      for (i = 0; i < n; i++)
-      {
-
-            for (k = n - 1; k >= i; k--)
-            {
+      for (j = 1; j <= n; j = j * 2)
+            for (i = j; i > 1; i = i / 2)
                   count++;
-            }
-
-            for (k = i + 1; k < n; k++)
-            {
-                  for (j = n - 1; j >= i; j--)
-                  {
-                        count++;
-                  }
-            }
-      }
-
       // printf("Inner i %d\n", inner_i);
       // printf("Inner k %d\n", inner_k);
       // printf("Inner j %d\n", inner_j);
