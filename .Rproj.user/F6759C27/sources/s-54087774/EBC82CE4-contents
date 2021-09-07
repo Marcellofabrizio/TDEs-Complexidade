@@ -1,0 +1,109 @@
+---
+title: "TDE 1 - Análise de complexidade de código não-recursivo"
+author: "Marcello Fabrizio"
+date: "7/9/2021"
+output: pdf_document
+---
+
+Este é um R Notebook que contém as minhas soluções para as complexidades dos trechos de código dados como questões.
+
+### Trecho 1
+```
+for (i=0;i<n;i++) {
+   for (j=i+1;j<n;j++) {
+      if (m[i,1]>m[j,1]) {
+         for (k=0;k<n;k++) {
+           // Ops. Fundamentais
+           aux=m[i,k];
+           m[i,k]=m[j,k];
+           m[j,k]=m[i,k];
+         }
+      }
+   }
+}
+```
+No trecho acima, considerei as três operações fundamentais como uma única só para facilitar os cálculos.
+Na opeção `for` mais interna, teremos que ela executuá **n** vezes. Para o próximo `for`, com sua dependência pela variável **i**, 
+temos que a quantidade de suas execuções será de
+
+$$\sum_{i=0}^{n-1} n-(i+1)$$
+Agora, podemos tornar o somatório acima em $\sum_{i=0}^{n-1} n$ - $\sum_{i=0}^{n-1} i$ - $\sum_{i=0}^{n-1} 1$, e assim obtemos
+
+$$(n²-n)/2$$
+
+como resultado da complexidade do trecho 1.
+
+### Trecho 2
+
+```
+for (i=0;i<n;i++) {
+
+      for (k=n-1;k>=i;k--) {
+           m[i][k]/=m[i][i]; <- op fund
+      }
+      
+      for (k=i+1;k<n;k++) {
+            for (j=n-1;j>=i;j--){
+                  m[k][j]=m[k][j]/m[k][i]-m[i][j]; <- op fund.
+            }
+      }
+
+}
+```
+Para o primeiro `for` interno obtemos a complexidade como
+$$\sum_{i=0}^{n-1} n-1$$
+Simplificando este resultado teremos
+$$(n^2 + n)/2$$
+
+E para o segundo e terceiro laço interno, teremos que a complexidade de ambos será
+$$\sum_{i=0}^{n-1} (n-(i+1))*(n-i))$$
+Então teremos a complexidade do trecho 2 como 
+
+$$\sum_{i=0}^{n-1} n-1 + \sum_{i=0}^{n-1} (n-(i+1))*(n-i))$$
+(Não consegui encontrar uma fórmula simplificada para a somatória da segunda complexidade)
+
+### Trecho 3
+(considere a operação $log$ como $log_2$)
+```
+void Moo(int N)
+{
+      for (j = 1; j <= N; j = j * 2)
+            for (i = j; i > 1; i = i / 2)
+                  printf("%d\n", i);
+}
+```
+É possível re-organizar os laços do treco da seguinte maneira: 
+```
+void Moo(int N)
+{
+      for (i = 1; i <= N; i = i * 2)
+            for (j = 2; j <= i; j = j * 2)
+                 // op fundamental
+}
+```
+Para resolver a complexidade do trecho de código acima, como suas variáveis de controle não são incrementadas for um a cada iterção, **i** e **j** serão substituidas por $2^y$ e $2^k$ respectivamente. Assim teremos
+```
+void Moo(int N)
+{
+      for (2**y = 1; 2**y <= N; y++)
+            for (2**k = 2; 2**k <= 2**y; k++)
+                  // op fundamental
+}
+```
+E podemos simplificar ainda mais, chegando ao trecho final: (considere)
+```
+void Moo(int N)
+{
+      for (y = 0; y <= logN; y++)
+            for (k = 1; k <= log2**y; k++)
+                  // op fundamental
+}
+```
+Dessa forma teremos o laço interno como
+$$\sum_{k=1}^{log_2N}log_22^k = \sum_{k=1}^{log_2N}k$$
+E temos o laço externo como
+$$log_2N$$
+Podemos simplificar o resultado que obtivemos do laço interno para
+$$(log_2N + 1)/2$$
+e então multiplicamos pelo resultado do laço externo para chegarmos a equação de complexidade
+$$((log_2N)^2 + log_2N)/2$$
