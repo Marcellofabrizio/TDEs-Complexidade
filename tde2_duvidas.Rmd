@@ -1,0 +1,86 @@
+---
+title: "Dúvidas"
+output: 
+    pdf_document: default
+    html_notebook: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 1 - T(n/2) + 1 + n
+$$  
+T(N) = \begin{cases} 0, N=1\\T(\frac{N}{2}) + 1 + N, N>1 \end{cases} 
+$$
+
+$$\begin{aligned}
+T(1) = 0
+\\
+T(2) = T(1) + 1 + 2 = 3
+\\
+T(4) = T(2) + 1 + 4 = 8
+\\
+T(8) = T(4) + 1 + 8 = 17
+\end{aligned}$$
+
+Então temos que
+
+$$
+T(N) = T(N/2) + 1 + N
+$$
+Onde
+$$
+T(N/2) = T(\frac{N}{2^2}) + 1 + \frac{N}{2}
+$$
+Substituindo em T(N)
+$$\begin{aligned}
+T(N) = [T(\frac{N}{2^2}) + 1 + \frac{N}{2}] + 1 + N
+\\\\
+= T(\frac{N}{2^2}) + 2 + \frac{N}{2} + N
+\\\\
+= [T(\frac{N}{2^3}) + 1 + \frac{N}{2^2}] + 2 + \frac{N}{2} + N
+\\\\
+= T( \frac{N}{2^3}) + 3 + \frac{N}{2^2} +  \frac{N}{2} + N
+\\\\
+= [T(\frac{N}{2^4}) + 1 + \frac{N}{2^3}] + 3 + \frac{N}{2^2} +  \frac{N}{2} + N
+\\\\
+= T(\frac{N}{2^4}) + 4 + \frac{N}{2^3} +  \frac{N}{2^2} +  \frac{N}{2} + N
+\end{aligned}$$
+Ou seja, percebemos que essa recorrência acontecerá um número indefinido de vezes, que chamaremos de *k*. Portanto temos
+$$\begin{aligned}
+T(N) = T(\frac{N}{2^k}) + k + \frac{N}{2^{k-1}} + \frac{N}{2^{k-2}} + ... + \frac{N}{2} + N
+\end{aligned}$$
+Assumindo que $\frac{N}{2^k} = 1$, temos que $N = 2^k$, e $k = log_2{N}$. Substituindo na equação de recorrência, obtemos
+$$\begin{align}
+T(N) = T(1) + log_2{N} + N*[\frac{1}{2^{k-1}} + \frac{1}{2^{k-2}} + ... + \frac{1}{2} + 1]
+\\\\
+= T(1) + log_2{N} + N*\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}
+\end{align}$$
+
+Vamos interpretar $\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}$ como uma PG de razão $q =\frac{1}{2}$, com o primeiro termo $a1 = 1$ e o enésimo termo sendo $\frac{1}{2^{logN-1}}$. Podemos trocar $a1$ com $aN$ para termos essa PG invertida e assim ter uma razão inteira, nesse caso temos
+$$\begin{align}
+
+a1 = \frac{1}{2^{logN-1}}
+\\\\
+= \frac{1}{(2^{logN})*(2^{-1})}
+\\\\
+= \frac{2}{N^{log2}}
+\\\\
+= \frac{2}{m}
+
+\end{align}$$
+
+$$\begin{align}
+
+S = \frac{2*1 - \frac{2}{N}}{1-2}
+\\\\
+\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i} = 2 - \frac{2}{N}
+
+\end{align}$$
+Voltando para a equação anterior, teremos
+$$\begin{align}
+T(N) = T(1) + log_2{N} + N*\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}
+\\\\
+T(N) = log_2{N} + N*(2 - \frac{2}{N})
+\end{align}$$
