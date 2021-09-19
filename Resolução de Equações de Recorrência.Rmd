@@ -56,15 +56,15 @@ $$\begin{aligned}
 T(N) = T(\frac{N}{2^k}) + k + \frac{N}{2^{k-1}} + \frac{N}{2^{k-2}} + ... + \frac{N}{2} + N
 \end{aligned}$$
 Assumindo que $\frac{N}{2^k} = 1$, temos que $N = 2^k$, e $k = log_2{N}$. Substituindo na equação de recorrência, obtemos
-$$\begin{align}
+$$\begin{aligned}
 T(N) = T(1) + log_2{N} + N*[\frac{1}{2^{k-1}} + \frac{1}{2^{k-2}} + ... + \frac{1}{2} + 1]
 \\\\
 = T(1) + log_2{N} + N*\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}
-\end{align}$$
+\end{aligned}$$
 
 Vamos interpretar $\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}$ como uma PG de razão $q =\frac{1}{2}$, com o primeiro termo $a1 = 1$ e o enésimo termo sendo $\frac{1}{2^{logN-1}}$. Podemos trocar $a1$ com $aN$ para termos essa PG invertida e assim ter uma razão inteira, nesse caso temos
-$$\begin{align}
 
+$$\begin{aligned}
 a1 = \frac{1}{2^{logN-1}}
 \\\\
 = \frac{1}{(2^{logN})*(2^{-1})}
@@ -72,22 +72,19 @@ a1 = \frac{1}{2^{logN-1}}
 = \frac{2}{N^{log2}}
 \\\\
 = \frac{2}{m}
+\end{aligned}$$
 
-\end{align}$$
-
-$$\begin{align}
-
+$$\begin{aligned}
 S = \frac{2*1 - \frac{2}{N}}{1-2}
 \\\\
 \sum_{i=0}^{log_2{N}-1} \frac{1}{2^i} = 2 - \frac{2}{N}
-
-\end{align}$$
+\end{aligned}$$
 Voltando para a equação anterior, teremos
-$$\begin{align}
+$$\begin{aligned}
 T(N) = T(1) + log_2{N} + N*\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}
 \\\\
 T(N) = log_2{N} + N*(2 - \frac{2}{N})
-\end{align}$$
+\end{aligned}$$
 
 ### 2 - T(N) = T(N/2) + bN + C
 
@@ -134,4 +131,84 @@ $$
 Assim chegaremos a seguinte equação de recorrência
 $$
 T(N) = log_2{N}c + 2Nb - 2b
+$$
+### 3 - T(N) = 4T(N/2) + N
+Nessa questão, apliquei o método que vimos na aula do dia 14/09/2021 para resolver a equação de recorrência.
+$$  
+T(N) = \begin{cases} 0, N=1\\4T(\frac{N}{2}) + N, N>1 \end{cases} 
+$$
+Para isso, vamos primeiro buscar um padrão aplicando valores a função
+$$\begin{aligned}
+T(1) = 0
+\\\\
+T(2) = 4T(1) + 2 = 2
+\\\\
+T(4) = 4T(2) + 4 = 8 + 4
+\\\\
+T(8) = 4T(4) + 8 = 32 + 16 + 8
+\\\\
+T(16) = 4T(8) + 16 = 128 + 64 + 32 + 16
+\end{aligned}$$
+
+Podemos perceber que o resultado é a soma de uma progressão geométrica. Agora, vamos analizar os termos da PG. Temos que a razão desta PG é $q = 2$, o seu primeiro termo é $a1 = N$ e o número de termos será $n = log_2{N}$. Entretanto, não possúimos o n-ésimo termo da PG, o que podemos obter da seguinte maneira
+$$\begin{aligned}
+an = a1.q^{n-1}
+\\\\
+= N.2^{log_2{N} - 1}
+\\\\
+= N.2^{log_2{N}}. 2^{-1}
+\end{aligned}$$
+
+Podemos aplicar a propriedade logarítmica $a^{log_a{b} = b}$ para obter
+
+$$\begin{aligned}
+an = N.N.\frac{1}{2}
+\\\\
+= \frac{N^2}{2}
+\end{aligned}$$
+Agora podemos aplicar esses valores na soma da PG para obter
+$$\begin{aligned}
+S = \frac{N.(2^{log_2{N}} - 1)}{2-1}
+\\\\
+= N(N-1)
+\\\\
+= N^2 - N
+\end{aligned}$$
+Assim temo que 
+$$
+T(N) = N^2 - N
+$$
+
+### 4 - T(N)=2T(N/4)+1
+
+Assim como a questão anterior, utilizaremos o método da expansão
+$$  
+T(N) = \begin{cases} 0, N=1\\2T(\frac{N}{4}) + 1, N>1 \end{cases} 
+$$
+
+Percebemos que agora $N$ está sendo dividido por 4, então assim vamos ter as seguintes substituições
+
+$$\begin{aligned}
+T(1) = 0
+\\\\
+T(4) = 2T(1) + 1 = 1
+\\\\
+T(16) = 2T(4) + 1 = 2 + 1
+\\\\
+T(64) = 2T(16) + 1 = 4 + 2 + 1
+\\\\
+T(256) = 2T(64) + 1 = 8 + 4 + 2 + 1
+\\\\
+T(1024) = 2T(256) + 1 = 16 + 8 + 4 + 2 + 1
+\end{aligned}$$
+
+Fica evidente que temos uma PG com os termos $q = 2$, $a1 = 1$ e a quantidade de termos $n = log_4{N}$. Com isso vamos obter a soma da PG
+$$\begin{aligned}
+S = \frac{1.(2^{log_4{N}} -1)}{2-1}
+\\\\
+= 2^{log_4{N}} -1
+\end{aligned}$$
+Assim temos que
+$$
+T(N) = 2^{log_4{N}} -1
 $$

@@ -253,13 +253,13 @@ T(N) = [T(\frac{N}{2^2}) + 1 + \frac{N}{2}] + 1 + N
 = T(\frac{N}{2^4}) + 4 + \frac{N}{2^3} +  \frac{N}{2^2} +  \frac{N}{2} + N
 \end{aligned}\]</span> Ou seja, percebemos que essa recorrência acontecerá um número indefinido de vezes, que chamaremos de <em>k</em>. Portanto temos <span class="math display">\[\begin{aligned}
 T(N) = T(\frac{N}{2^k}) + k + \frac{N}{2^{k-1}} + \frac{N}{2^{k-2}} + ... + \frac{N}{2} + N
-\end{aligned}\]</span> Assumindo que <span class="math inline">\(\frac{N}{2^k} = 1\)</span>, temos que <span class="math inline">\(N = 2^k\)</span>, e <span class="math inline">\(k = log_2{N}\)</span>. Substituindo na equação de recorrência, obtemos <span class="math display">\[\begin{align}
+\end{aligned}\]</span> Assumindo que <span class="math inline">\(\frac{N}{2^k} = 1\)</span>, temos que <span class="math inline">\(N = 2^k\)</span>, e <span class="math inline">\(k = log_2{N}\)</span>. Substituindo na equação de recorrência, obtemos <span class="math display">\[\begin{aligned}
 T(N) = T(1) + log_2{N} + N*[\frac{1}{2^{k-1}} + \frac{1}{2^{k-2}} + ... + \frac{1}{2} + 1]
 \\\\
 = T(1) + log_2{N} + N*\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}
-\end{align}\]</span></p>
-<p>Vamos interpretar <span class="math inline">\(\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}\)</span> como uma PG de razão <span class="math inline">\(q =\frac{1}{2}\)</span>, com o primeiro termo <span class="math inline">\(a1 = 1\)</span> e o enésimo termo sendo <span class="math inline">\(\frac{1}{2^{logN-1}}\)</span>. Podemos trocar <span class="math inline">\(a1\)</span> com <span class="math inline">\(aN\)</span> para termos essa PG invertida e assim ter uma razão inteira, nesse caso temos $$<span class="math display">\[\begin{align}
-
+\end{aligned}\]</span></p>
+<p>Vamos interpretar <span class="math inline">\(\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}\)</span> como uma PG de razão <span class="math inline">\(q =\frac{1}{2}\)</span>, com o primeiro termo <span class="math inline">\(a1 = 1\)</span> e o enésimo termo sendo <span class="math inline">\(\frac{1}{2^{logN-1}}\)</span>. Podemos trocar <span class="math inline">\(a1\)</span> com <span class="math inline">\(aN\)</span> para termos essa PG invertida e assim ter uma razão inteira, nesse caso temos</p>
+<p><span class="math display">\[\begin{aligned}
 a1 = \frac{1}{2^{logN-1}}
 \\\\
 = \frac{1}{(2^{logN})*(2^{-1})}
@@ -267,21 +267,16 @@ a1 = \frac{1}{2^{logN-1}}
 = \frac{2}{N^{log2}}
 \\\\
 = \frac{2}{m}
-
-\end{align}\]</span>$$</p>
-<p>$$<span class="math display">\[\begin{align}
-
+\end{aligned}\]</span></p>
+<p><span class="math display">\[\begin{aligned}
 S = \frac{2*1 - \frac{2}{N}}{1-2}
 \\\\
 \sum_{i=0}^{log_2{N}-1} \frac{1}{2^i} = 2 - \frac{2}{N}
-
-\end{align}\]</span><span class="math display">\[
-Voltando para a equação anterior, teremos
-\]</span><span class="math display">\[\begin{align}
+\end{aligned}\]</span> Voltando para a equação anterior, teremos <span class="math display">\[\begin{aligned}
 T(N) = T(1) + log_2{N} + N*\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}
 \\\\
 T(N) = log_2{N} + N*(2 - \frac{2}{N})
-\end{align}\]</span>$$</p>
+\end{aligned}\]</span></p>
 </div>
 <div id="tn-tn2-bn-c" class="section level3">
 <h3>2 - T(N) = T(N/2) + bN + C</h3>
@@ -316,11 +311,71 @@ T(N) = T(\frac{N}{2^k}) + Nb*\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i} + log_2{N} + 
 \sum_{i=0}^{log_2{N}-1} \frac{1}{2^i} = 2 - \frac{2}{N}
 \]</span> Assim chegaremos a seguinte equação de recorrência <span class="math display">\[
 T(N) = log_2{N}c + 2Nb - 2b
+\]</span> ### 3 - T(N) = 4T(N/2) + N Nessa questão, apliquei o método que vimos na aula do dia 14/09/2021 para resolver a equação de recorrência. <span class="math display">\[  
+T(N) = \begin{cases} 0, N=1\\4T(\frac{N}{2}) + N, N&gt;1 \end{cases} 
+\]</span> Para isso, vamos primeiro buscar um padrão aplicando valores a função <span class="math display">\[\begin{aligned}
+T(1) = 0
+\\\\
+T(2) = 4T(1) + 2 = 2
+\\\\
+T(4) = 4T(2) + 4 = 8 + 4
+\\\\
+T(8) = 4T(4) + 8 = 32 + 16 + 8
+\\\\
+T(16) = 4T(8) + 16 = 128 + 64 + 32 + 16
+\end{aligned}\]</span></p>
+<p>Podemos perceber que o resultado é a soma de uma progressão geométrica. Agora, vamos analizar os termos da PG. Temos que a razão desta PG é <span class="math inline">\(q = 2\)</span>, o seu primeiro termo é <span class="math inline">\(a1 = N\)</span> e o número de termos será <span class="math inline">\(n = log_2{N}\)</span>. Entretanto, não possúimos o n-ésimo termo da PG, o que podemos obter da seguinte maneira <span class="math display">\[\begin{aligned}
+an = a1.q^{n-1}
+\\\\
+= N.2^{log_2{N} - 1}
+\\\\
+= N.2^{log_2{N}}. 2^{-1}
+\end{aligned}\]</span></p>
+<p>Podemos aplicar a propriedade logarítmica <span class="math inline">\(a^{log_a{b} = b}\)</span> para obter</p>
+<p><span class="math display">\[\begin{aligned}
+an = N.N.\frac{1}{2}
+\\\\
+= \frac{N^2}{2}
+\end{aligned}\]</span> Agora podemos aplicar esses valores na soma da PG para obter <span class="math display">\[\begin{aligned}
+S = \frac{N.(2^{log_2{N}} - 1)}{2-1}
+\\\\
+= N(N-1)
+\\\\
+= N^2 - N
+\end{aligned}\]</span> Assim temo que <span class="math display">\[
+T(N) = N^2 - N
+\]</span></p>
+</div>
+<div id="tn2tn41" class="section level3">
+<h3>4 - T(N)=2T(N/4)+1</h3>
+<p>Assim como a questão anterior, utilizaremos o método da expansão <span class="math display">\[  
+T(N) = \begin{cases} 0, N=1\\2T(\frac{N}{4}) + 1, N&gt;1 \end{cases} 
+\]</span></p>
+<p>Percebemos que agora <span class="math inline">\(N\)</span> está sendo dividido por 4, então assim vamos ter as seguintes substituições</p>
+<p><span class="math display">\[\begin{aligned}
+T(1) = 0
+\\\\
+T(4) = 2T(1) + 1 = 1
+\\\\
+T(16) = 2T(4) + 1 = 2 + 1
+\\\\
+T(64) = 2T(16) + 1 = 4 + 2 + 1
+\\\\
+T(256) = 2T(64) + 1 = 8 + 4 + 2 + 1
+\\\\
+T(1024) = 2T(256) + 1 = 16 + 8 + 4 + 2 + 1
+\end{aligned}\]</span></p>
+<p>Fica evidente que temos uma PG com os termos <span class="math inline">\(q = 2\)</span>, <span class="math inline">\(a1 = 1\)</span> e a quantidade de termos <span class="math inline">\(n = log_4{N}\)</span>. Com isso vamos obter a soma da PG <span class="math display">\[\begin{aligned}
+S = \frac{1.(2^{log_4{N}} -1)}{2-1}
+\\\\
+= 2^{log_4{N}} -1
+\end{aligned}\]</span> Assim temos que <span class="math display">\[
+T(N) = 2^{log_4{N}} -1
 \]</span></p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiVERFIDIgLSBSZXNvbHXDp8OjbyBkZSBFcXVhw6fDtWVzIGRlIFJlY29ycsOqbmNpYSIKYXV0aG9yOiAiTWFyY2VsbG8gRmFicml6aW8iCmRhdGU6ICI5LzEyLzIwMjEiCm91dHB1dDoKICBwZGZfZG9jdW1lbnQ6IGRlZmF1bHQKICBodG1sX25vdGVib29rOiBkZWZhdWx0Ci0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkKYGBgCgoKIyMjIDEgLSBUKE4pID0gVChuLzIpICsgMSArIG4KUGFyYSBhIGVxdWHDp8OjbyBkZSByZWNvcnLDqm5jaWEgYWNpbWEsIG9idGl2ZSBvIHNlZ3VpbnRlIGRlc2Vudm9sdmltZW50bzoKJCQgIApUKE4pID0gXGJlZ2lue2Nhc2VzfSAwLCBOPTFcXFQoXGZyYWN7Tn17Mn0pICsgMSArIE4sIE4+MSBcZW5ke2Nhc2VzfSAKJCQKCiQkXGJlZ2lue2FsaWduZWR9ClQoMSkgPSAwClxcClQoMikgPSBUKDEpICsgMSArIDIgPSAzClxcClQoNCkgPSBUKDIpICsgMSArIDQgPSA4ClxcClQoOCkgPSBUKDQpICsgMSArIDggPSAxNwpcZW5ke2FsaWduZWR9JCQKCkVudMOjbyB0ZW1vcyBxdWUKCiQkClQoTikgPSBUKE4vMikgKyAxICsgTgokJApPbmRlCiQkClQoTi8yKSA9IFQoXGZyYWN7Tn17Ml4yfSkgKyAxICsgXGZyYWN7Tn17Mn0KJCQKU3Vic3RpdHVpbmRvIGVtIFQoTikKJCRcYmVnaW57YWxpZ25lZH0KVChOKSA9IFtUKFxmcmFje059ezJeMn0pICsgMSArIFxmcmFje059ezJ9XSArIDEgKyBOClxcXFwKPSBUKFxmcmFje059ezJeMn0pICsgMiArIFxmcmFje059ezJ9ICsgTgpcXFxcCj0gW1QoXGZyYWN7Tn17Ml4zfSkgKyAxICsgXGZyYWN7Tn17Ml4yfV0gKyAyICsgXGZyYWN7Tn17Mn0gKyBOClxcXFwKPSBUKCBcZnJhY3tOfXsyXjN9KSArIDMgKyBcZnJhY3tOfXsyXjJ9ICsgIFxmcmFje059ezJ9ICsgTgpcXFxcCj0gW1QoXGZyYWN7Tn17Ml40fSkgKyAxICsgXGZyYWN7Tn17Ml4zfV0gKyAzICsgXGZyYWN7Tn17Ml4yfSArICBcZnJhY3tOfXsyfSArIE4KXFxcXAo9IFQoXGZyYWN7Tn17Ml40fSkgKyA0ICsgXGZyYWN7Tn17Ml4zfSArICBcZnJhY3tOfXsyXjJ9ICsgIFxmcmFje059ezJ9ICsgTgpcZW5ke2FsaWduZWR9JCQKT3Ugc2VqYSwgcGVyY2ViZW1vcyBxdWUgZXNzYSByZWNvcnLDqm5jaWEgYWNvbnRlY2Vyw6EgdW0gbsO6bWVybyBpbmRlZmluaWRvIGRlIHZlemVzLCBxdWUgY2hhbWFyZW1vcyBkZSAqayouIFBvcnRhbnRvIHRlbW9zCiQkXGJlZ2lue2FsaWduZWR9ClQoTikgPSBUKFxmcmFje059ezJea30pICsgayArIFxmcmFje059ezJee2stMX19ICsgXGZyYWN7Tn17Ml57ay0yfX0gKyAuLi4gKyBcZnJhY3tOfXsyfSArIE4KXGVuZHthbGlnbmVkfSQkCkFzc3VtaW5kbyBxdWUgJFxmcmFje059ezJea30gPSAxJCwgdGVtb3MgcXVlICROID0gMl5rJCwgZSAkayA9IGxvZ18ye059JC4gU3Vic3RpdHVpbmRvIG5hIGVxdWHDp8OjbyBkZSByZWNvcnLDqm5jaWEsIG9idGVtb3MKJCRcYmVnaW57YWxpZ259ClQoTikgPSBUKDEpICsgbG9nXzJ7Tn0gKyBOKltcZnJhY3sxfXsyXntrLTF9fSArIFxmcmFjezF9ezJee2stMn19ICsgLi4uICsgXGZyYWN7MX17Mn0gKyAxXQpcXFxcCj0gVCgxKSArIGxvZ18ye059ICsgTipcc3VtX3tpPTB9Xntsb2dfMntOfS0xfSBcZnJhY3sxfXsyXml9ClxlbmR7YWxpZ259JCQKClZhbW9zIGludGVycHJldGFyICRcc3VtX3tpPTB9Xntsb2dfMntOfS0xfSBcZnJhY3sxfXsyXml9JCBjb21vIHVtYSBQRyBkZSByYXrDo28gJHEgPVxmcmFjezF9ezJ9JCwgY29tIG8gcHJpbWVpcm8gdGVybW8gJGExID0gMSQgZSBvIGVuw6lzaW1vIHRlcm1vIHNlbmRvICRcZnJhY3sxfXsyXntsb2dOLTF9fSQuIFBvZGVtb3MgdHJvY2FyICRhMSQgY29tICRhTiQgcGFyYSB0ZXJtb3MgZXNzYSBQRyBpbnZlcnRpZGEgZSBhc3NpbSB0ZXIgdW1hIHJhesOjbyBpbnRlaXJhLCBuZXNzZSBjYXNvIHRlbW9zCiQkXGJlZ2lue2FsaWdufQoKYTEgPSBcZnJhY3sxfXsyXntsb2dOLTF9fQpcXFxcCj0gXGZyYWN7MX17KDJee2xvZ059KSooMl57LTF9KX0KXFxcXAo9IFxmcmFjezJ9e05ee2xvZzJ9fQpcXFxcCj0gXGZyYWN7Mn17bX0KClxlbmR7YWxpZ259JCQKCiQkXGJlZ2lue2FsaWdufQoKUyA9IFxmcmFjezIqMSAtIFxmcmFjezJ9e059fXsxLTJ9ClxcXFwKXHN1bV97aT0wfV57bG9nXzJ7Tn0tMX0gXGZyYWN7MX17Ml5pfSA9IDIgLSBcZnJhY3syfXtOfQoKXGVuZHthbGlnbn0kJApWb2x0YW5kbyBwYXJhIGEgZXF1YcOnw6NvIGFudGVyaW9yLCB0ZXJlbW9zCiQkXGJlZ2lue2FsaWdufQpUKE4pID0gVCgxKSArIGxvZ18ye059ICsgTipcc3VtX3tpPTB9Xntsb2dfMntOfS0xfSBcZnJhY3sxfXsyXml9ClxcXFwKVChOKSA9IGxvZ18ye059ICsgTiooMiAtIFxmcmFjezJ9e059KQpcZW5ke2FsaWdufSQkCgojIyMgMiAtIFQoTikgPSBUKE4vMikgKyBiTiArIEMKCkNvbSBlc3NhIGVxdWHDp8OjbyB0ZXJlbW9zIHVtIGRlc2Vudm9sdmltZW50byBwYXJlY2lkbyBjb20gYSBhbnRlcmlvciwgY29tIGEgZGlmZXJlbsOnYSBxdWUgYWdvcmEgdGVtb3Mgb3MgdGVybW9zICRiJCBlICRjJC4KJCQKVChOKSA9IFxiZWdpbntjYXNlc30gMCwgTj0xXFxUKFxmcmFje059ezJ9KSArIGJOICsgYywgTj4xIFxlbmR7Y2FzZXN9IAokJAoKJCRcYmVnaW57YWxpZ25lZH0KVCgxKSA9IDAKXFwKVCgyKSA9IFQoMSkgKyAyYiArIGMgPSAyYiArIGMKXFwKVCg0KSA9IFQoMikgKyA0YiArIGMgPSA2YiArIDJjClxcClQoOCkgPSBUKDQpICsgOGIgKyBjID0gMTRiICsgM2MKXGVuZHthbGlnbmVkfSQkCgpPbmRlCiQkClQoTi8yKSA9IFQoXGZyYWN7Tn17Ml4yfSkgKyBcZnJhY3tOYn17Mn0gKyBjCiQkClN1YnN0aXR1aW5kbyBlbSBUKE4pCiQkXGJlZ2lue2FsaWduZWR9ClQoTikgPSBbVChcZnJhY3tOfXsyXjJ9KSArIFxmcmFje05ifXsyfSArIGNdICsgTmIgKyBjClxcXFwKPSBUKFxmcmFje059ezJeMn0pICsgXGZyYWN7TmJ9ezJ9ICsgTmIgKyAyYwpcXFxcCj0gW1QoXGZyYWN7Tn17Ml4zfSkgKyBcZnJhY3tOYn17Ml4yfSArIGNdICsgXGZyYWN7TmJ9ezJ9ICsgTmIgKyAyYwpcXFxcCj0gVChcZnJhY3tOfXsyXjN9KSArIFxmcmFje05ifXsyXjJ9ICsgXGZyYWN7TmJ9ezJ9ICsgTmIgKyAzYwpcXFxcCj0gVChcZnJhY3tOfXsyXmt9KSArIE5iKltcZnJhY3sxfXsyXntrLTF9fSArIFxmcmFjezF9ezJee2stMn19ICsgLi4uICsgXGZyYWN7MX17Mn0gKyAxXSArIGxvZ18ye059ICsga2MKXGVuZHthbGlnbmVkfSQkCgpWYW1vcyB0ZXIgZW50w6NvCiQkClQoTikgPSBUKFxmcmFje059ezJea30pICsgTmIqXHN1bV97aT0wfV57bG9nXzJ7Tn0tMX0gXGZyYWN7MX17Ml5pfSArIGxvZ18ye059ICsga2MKJCQKT25kZSwgY29tbyB2aW1vcyBubyBleC4gMSwKJCQKXHN1bV97aT0wfV57bG9nXzJ7Tn0tMX0gXGZyYWN7MX17Ml5pfSA9IDIgLSBcZnJhY3syfXtOfQokJApBc3NpbSBjaGVnYXJlbW9zIGEgc2VndWludGUgZXF1YcOnw6NvIGRlIHJlY29ycsOqbmNpYQokJApUKE4pID0gbG9nXzJ7Tn1jICsgMk5iIC0gMmIKJCQK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVERFIDIgLSBSZXNvbHXDp8OjbyBkZSBFcXVhw6fDtWVzIGRlIFJlY29ycsOqbmNpYSIKYXV0aG9yOiAiTWFyY2VsbG8gRmFicml6aW8iCmRhdGU6ICI5LzEyLzIwMjEiCm91dHB1dDoKICBwZGZfZG9jdW1lbnQ6IGRlZmF1bHQKICBodG1sX25vdGVib29rOiBkZWZhdWx0Ci0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkKYGBgCgoKIyMjIDEgLSBUKE4pID0gVChuLzIpICsgMSArIG4KUGFyYSBhIGVxdWHDp8OjbyBkZSByZWNvcnLDqm5jaWEgYWNpbWEsIG9idGl2ZSBvIHNlZ3VpbnRlIGRlc2Vudm9sdmltZW50bzoKJCQgIApUKE4pID0gXGJlZ2lue2Nhc2VzfSAwLCBOPTFcXFQoXGZyYWN7Tn17Mn0pICsgMSArIE4sIE4+MSBcZW5ke2Nhc2VzfSAKJCQKCiQkXGJlZ2lue2FsaWduZWR9ClQoMSkgPSAwClxcClQoMikgPSBUKDEpICsgMSArIDIgPSAzClxcClQoNCkgPSBUKDIpICsgMSArIDQgPSA4ClxcClQoOCkgPSBUKDQpICsgMSArIDggPSAxNwpcZW5ke2FsaWduZWR9JCQKCkVudMOjbyB0ZW1vcyBxdWUKCiQkClQoTikgPSBUKE4vMikgKyAxICsgTgokJApPbmRlCiQkClQoTi8yKSA9IFQoXGZyYWN7Tn17Ml4yfSkgKyAxICsgXGZyYWN7Tn17Mn0KJCQKU3Vic3RpdHVpbmRvIGVtIFQoTikKJCRcYmVnaW57YWxpZ25lZH0KVChOKSA9IFtUKFxmcmFje059ezJeMn0pICsgMSArIFxmcmFje059ezJ9XSArIDEgKyBOClxcXFwKPSBUKFxmcmFje059ezJeMn0pICsgMiArIFxmcmFje059ezJ9ICsgTgpcXFxcCj0gW1QoXGZyYWN7Tn17Ml4zfSkgKyAxICsgXGZyYWN7Tn17Ml4yfV0gKyAyICsgXGZyYWN7Tn17Mn0gKyBOClxcXFwKPSBUKCBcZnJhY3tOfXsyXjN9KSArIDMgKyBcZnJhY3tOfXsyXjJ9ICsgIFxmcmFje059ezJ9ICsgTgpcXFxcCj0gW1QoXGZyYWN7Tn17Ml40fSkgKyAxICsgXGZyYWN7Tn17Ml4zfV0gKyAzICsgXGZyYWN7Tn17Ml4yfSArICBcZnJhY3tOfXsyfSArIE4KXFxcXAo9IFQoXGZyYWN7Tn17Ml40fSkgKyA0ICsgXGZyYWN7Tn17Ml4zfSArICBcZnJhY3tOfXsyXjJ9ICsgIFxmcmFje059ezJ9ICsgTgpcZW5ke2FsaWduZWR9JCQKT3Ugc2VqYSwgcGVyY2ViZW1vcyBxdWUgZXNzYSByZWNvcnLDqm5jaWEgYWNvbnRlY2Vyw6EgdW0gbsO6bWVybyBpbmRlZmluaWRvIGRlIHZlemVzLCBxdWUgY2hhbWFyZW1vcyBkZSAqayouIFBvcnRhbnRvIHRlbW9zCiQkXGJlZ2lue2FsaWduZWR9ClQoTikgPSBUKFxmcmFje059ezJea30pICsgayArIFxmcmFje059ezJee2stMX19ICsgXGZyYWN7Tn17Ml57ay0yfX0gKyAuLi4gKyBcZnJhY3tOfXsyfSArIE4KXGVuZHthbGlnbmVkfSQkCkFzc3VtaW5kbyBxdWUgJFxmcmFje059ezJea30gPSAxJCwgdGVtb3MgcXVlICROID0gMl5rJCwgZSAkayA9IGxvZ18ye059JC4gU3Vic3RpdHVpbmRvIG5hIGVxdWHDp8OjbyBkZSByZWNvcnLDqm5jaWEsIG9idGVtb3MKJCRcYmVnaW57YWxpZ25lZH0KVChOKSA9IFQoMSkgKyBsb2dfMntOfSArIE4qW1xmcmFjezF9ezJee2stMX19ICsgXGZyYWN7MX17Ml57ay0yfX0gKyAuLi4gKyBcZnJhY3sxfXsyfSArIDFdClxcXFwKPSBUKDEpICsgbG9nXzJ7Tn0gKyBOKlxzdW1fe2k9MH1ee2xvZ18ye059LTF9IFxmcmFjezF9ezJeaX0KXGVuZHthbGlnbmVkfSQkCgpWYW1vcyBpbnRlcnByZXRhciAkXHN1bV97aT0wfV57bG9nXzJ7Tn0tMX0gXGZyYWN7MX17Ml5pfSQgY29tbyB1bWEgUEcgZGUgcmF6w6NvICRxID1cZnJhY3sxfXsyfSQsIGNvbSBvIHByaW1laXJvIHRlcm1vICRhMSA9IDEkIGUgbyBlbsOpc2ltbyB0ZXJtbyBzZW5kbyAkXGZyYWN7MX17Ml57bG9nTi0xfX0kLiBQb2RlbW9zIHRyb2NhciAkYTEkIGNvbSAkYU4kIHBhcmEgdGVybW9zIGVzc2EgUEcgaW52ZXJ0aWRhIGUgYXNzaW0gdGVyIHVtYSByYXrDo28gaW50ZWlyYSwgbmVzc2UgY2FzbyB0ZW1vcwoKJCRcYmVnaW57YWxpZ25lZH0KYTEgPSBcZnJhY3sxfXsyXntsb2dOLTF9fQpcXFxcCj0gXGZyYWN7MX17KDJee2xvZ059KSooMl57LTF9KX0KXFxcXAo9IFxmcmFjezJ9e05ee2xvZzJ9fQpcXFxcCj0gXGZyYWN7Mn17bX0KXGVuZHthbGlnbmVkfSQkCgokJFxiZWdpbnthbGlnbmVkfQpTID0gXGZyYWN7MioxIC0gXGZyYWN7Mn17Tn19ezEtMn0KXFxcXApcc3VtX3tpPTB9Xntsb2dfMntOfS0xfSBcZnJhY3sxfXsyXml9ID0gMiAtIFxmcmFjezJ9e059ClxlbmR7YWxpZ25lZH0kJApWb2x0YW5kbyBwYXJhIGEgZXF1YcOnw6NvIGFudGVyaW9yLCB0ZXJlbW9zCiQkXGJlZ2lue2FsaWduZWR9ClQoTikgPSBUKDEpICsgbG9nXzJ7Tn0gKyBOKlxzdW1fe2k9MH1ee2xvZ18ye059LTF9IFxmcmFjezF9ezJeaX0KXFxcXApUKE4pID0gbG9nXzJ7Tn0gKyBOKigyIC0gXGZyYWN7Mn17Tn0pClxlbmR7YWxpZ25lZH0kJAoKIyMjIDIgLSBUKE4pID0gVChOLzIpICsgYk4gKyBDCgpDb20gZXNzYSBlcXVhw6fDo28gdGVyZW1vcyB1bSBkZXNlbnZvbHZpbWVudG8gcGFyZWNpZG8gY29tIGEgYW50ZXJpb3IsIGNvbSBhIGRpZmVyZW7Dp2EgcXVlIGFnb3JhIHRlbW9zIG9zIHRlcm1vcyAkYiQgZSAkYyQuCiQkClQoTikgPSBcYmVnaW57Y2FzZXN9IDAsIE49MVxcVChcZnJhY3tOfXsyfSkgKyBiTiArIGMsIE4+MSBcZW5ke2Nhc2VzfSAKJCQKCiQkXGJlZ2lue2FsaWduZWR9ClQoMSkgPSAwClxcClQoMikgPSBUKDEpICsgMmIgKyBjID0gMmIgKyBjClxcClQoNCkgPSBUKDIpICsgNGIgKyBjID0gNmIgKyAyYwpcXApUKDgpID0gVCg0KSArIDhiICsgYyA9IDE0YiArIDNjClxlbmR7YWxpZ25lZH0kJAoKT25kZQokJApUKE4vMikgPSBUKFxmcmFje059ezJeMn0pICsgXGZyYWN7TmJ9ezJ9ICsgYwokJApTdWJzdGl0dWluZG8gZW0gVChOKQokJFxiZWdpbnthbGlnbmVkfQpUKE4pID0gW1QoXGZyYWN7Tn17Ml4yfSkgKyBcZnJhY3tOYn17Mn0gKyBjXSArIE5iICsgYwpcXFxcCj0gVChcZnJhY3tOfXsyXjJ9KSArIFxmcmFje05ifXsyfSArIE5iICsgMmMKXFxcXAo9IFtUKFxmcmFje059ezJeM30pICsgXGZyYWN7TmJ9ezJeMn0gKyBjXSArIFxmcmFje05ifXsyfSArIE5iICsgMmMKXFxcXAo9IFQoXGZyYWN7Tn17Ml4zfSkgKyBcZnJhY3tOYn17Ml4yfSArIFxmcmFje05ifXsyfSArIE5iICsgM2MKXFxcXAo9IFQoXGZyYWN7Tn17Ml5rfSkgKyBOYipbXGZyYWN7MX17Ml57ay0xfX0gKyBcZnJhY3sxfXsyXntrLTJ9fSArIC4uLiArIFxmcmFjezF9ezJ9ICsgMV0gKyBsb2dfMntOfSArIGtjClxlbmR7YWxpZ25lZH0kJAoKVmFtb3MgdGVyIGVudMOjbwokJApUKE4pID0gVChcZnJhY3tOfXsyXmt9KSArIE5iKlxzdW1fe2k9MH1ee2xvZ18ye059LTF9IFxmcmFjezF9ezJeaX0gKyBsb2dfMntOfSArIGtjCiQkCk9uZGUsIGNvbW8gdmltb3Mgbm8gZXguIDEsCiQkClxzdW1fe2k9MH1ee2xvZ18ye059LTF9IFxmcmFjezF9ezJeaX0gPSAyIC0gXGZyYWN7Mn17Tn0KJCQKQXNzaW0gY2hlZ2FyZW1vcyBhIHNlZ3VpbnRlIGVxdWHDp8OjbyBkZSByZWNvcnLDqm5jaWEKJCQKVChOKSA9IGxvZ18ye059YyArIDJOYiAtIDJiCiQkCiMjIyAzIC0gVChOKSA9IDRUKE4vMikgKyBOCk5lc3NhIHF1ZXN0w6NvLCBhcGxpcXVlaSBvIG3DqXRvZG8gcXVlIHZpbW9zIG5hIGF1bGEgZG8gZGlhIDE0LzA5LzIwMjEgcGFyYSByZXNvbHZlciBhIGVxdWHDp8OjbyBkZSByZWNvcnLDqm5jaWEuCiQkICAKVChOKSA9IFxiZWdpbntjYXNlc30gMCwgTj0xXFw0VChcZnJhY3tOfXsyfSkgKyBOLCBOPjEgXGVuZHtjYXNlc30gCiQkClBhcmEgaXNzbywgdmFtb3MgcHJpbWVpcm8gYnVzY2FyIHVtIHBhZHLDo28gYXBsaWNhbmRvIHZhbG9yZXMgYSBmdW7Dp8OjbwokJFxiZWdpbnthbGlnbmVkfQpUKDEpID0gMApcXFxcClQoMikgPSA0VCgxKSArIDIgPSAyClxcXFwKVCg0KSA9IDRUKDIpICsgNCA9IDggKyA0ClxcXFwKVCg4KSA9IDRUKDQpICsgOCA9IDMyICsgMTYgKyA4ClxcXFwKVCgxNikgPSA0VCg4KSArIDE2ID0gMTI4ICsgNjQgKyAzMiArIDE2ClxlbmR7YWxpZ25lZH0kJAoKUG9kZW1vcyBwZXJjZWJlciBxdWUgbyByZXN1bHRhZG8gw6kgYSBzb21hIGRlIHVtYSBwcm9ncmVzc8OjbyBnZW9tw6l0cmljYS4gQWdvcmEsIHZhbW9zIGFuYWxpemFyIG9zIHRlcm1vcyBkYSBQRy4gVGVtb3MgcXVlIGEgcmF6w6NvIGRlc3RhIFBHIMOpICRxID0gMiQsIG8gc2V1IHByaW1laXJvIHRlcm1vIMOpICRhMSA9IE4kIGUgbyBuw7ptZXJvIGRlIHRlcm1vcyBzZXLDoSAkbiA9IGxvZ18ye059JC4gRW50cmV0YW50bywgbsOjbyBwb3Nzw7ppbW9zIG8gbi3DqXNpbW8gdGVybW8gZGEgUEcsIG8gcXVlIHBvZGVtb3Mgb2J0ZXIgZGEgc2VndWludGUgbWFuZWlyYQokJFxiZWdpbnthbGlnbmVkfQphbiA9IGExLnFee24tMX0KXFxcXAo9IE4uMl57bG9nXzJ7Tn0gLSAxfQpcXFxcCj0gTi4yXntsb2dfMntOfX0uIDJeey0xfQpcZW5ke2FsaWduZWR9JCQKClBvZGVtb3MgYXBsaWNhciBhIHByb3ByaWVkYWRlIGxvZ2Fyw610bWljYSAkYV57bG9nX2F7Yn0gPSBifSQgcGFyYSBvYnRlcgoKJCRcYmVnaW57YWxpZ25lZH0KYW4gPSBOLk4uXGZyYWN7MX17Mn0KXFxcXAo9IFxmcmFje05eMn17Mn0KXGVuZHthbGlnbmVkfSQkCkFnb3JhIHBvZGVtb3MgYXBsaWNhciBlc3NlcyB2YWxvcmVzIG5hIHNvbWEgZGEgUEcgcGFyYSBvYnRlcgokJFxiZWdpbnthbGlnbmVkfQpTID0gXGZyYWN7Ti4oMl57bG9nXzJ7Tn19IC0gMSl9ezItMX0KXFxcXAo9IE4oTi0xKQpcXFxcCj0gTl4yIC0gTgpcZW5ke2FsaWduZWR9JCQKQXNzaW0gdGVtbyBxdWUgCiQkClQoTikgPSBOXjIgLSBOCiQkCgojIyMgNCAtIFQoTik9MlQoTi80KSsxCgpBc3NpbSBjb21vIGEgcXVlc3TDo28gYW50ZXJpb3IsIHV0aWxpemFyZW1vcyBvIG3DqXRvZG8gZGEgZXhwYW5zw6NvCiQkICAKVChOKSA9IFxiZWdpbntjYXNlc30gMCwgTj0xXFwyVChcZnJhY3tOfXs0fSkgKyAxLCBOPjEgXGVuZHtjYXNlc30gCiQkCgpQZXJjZWJlbW9zIHF1ZSBhZ29yYSAkTiQgZXN0w6Egc2VuZG8gZGl2aWRpZG8gcG9yIDQsIGVudMOjbyBhc3NpbSB2YW1vcyB0ZXIgYXMgc2VndWludGVzIHN1YnN0aXR1acOnw7VlcwoKJCRcYmVnaW57YWxpZ25lZH0KVCgxKSA9IDAKXFxcXApUKDQpID0gMlQoMSkgKyAxID0gMQpcXFxcClQoMTYpID0gMlQoNCkgKyAxID0gMiArIDEKXFxcXApUKDY0KSA9IDJUKDE2KSArIDEgPSA0ICsgMiArIDEKXFxcXApUKDI1NikgPSAyVCg2NCkgKyAxID0gOCArIDQgKyAyICsgMQpcXFxcClQoMTAyNCkgPSAyVCgyNTYpICsgMSA9IDE2ICsgOCArIDQgKyAyICsgMQpcZW5ke2FsaWduZWR9JCQKCkZpY2EgZXZpZGVudGUgcXVlIHRlbW9zIHVtYSBQRyBjb20gb3MgdGVybW9zICRxID0gMiQsICRhMSA9IDEkIGUgYSBxdWFudGlkYWRlIGRlIHRlcm1vcyAkbiA9IGxvZ180e059JC4gQ29tIGlzc28gdmFtb3Mgb2J0ZXIgYSBzb21hIGRhIFBHCiQkXGJlZ2lue2FsaWduZWR9ClMgPSBcZnJhY3sxLigyXntsb2dfNHtOfX0gLTEpfXsyLTF9ClxcXFwKPSAyXntsb2dfNHtOfX0gLTEKXGVuZHthbGlnbmVkfSQkCkFzc2ltIHRlbW9zIHF1ZQokJApUKE4pID0gMl57bG9nXzR7Tn19IC0xCiQk</div>
 
 
 
