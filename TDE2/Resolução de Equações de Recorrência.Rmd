@@ -86,7 +86,7 @@ T(N) = T(1) + log_2{N} + N*\sum_{i=0}^{log_2{N}-1} \frac{1}{2^i}
 T(N) = log_2{N} + N*(2 - \frac{2}{N})
 \end{aligned}$$
 
-### 2 - T(N) = T(N/2) + bN + C
+### 2 - T(N) = T(N/2) + bN + c
 
 Com essa equação teremos um desenvolvimento parecido com a anterior, com a diferença que agora temos os termos $b$ e $c$.
 $$
@@ -132,7 +132,9 @@ Assim chegaremos a seguinte equação de recorrência
 $$
 T(N) = log_2{N}c + 2Nb - 2b
 $$
+
 ### 3 - T(N) = 4T(N/2) + N
+
 Nessa questão, apliquei o método que vimos na aula do dia 14/09/2021 para resolver a equação de recorrência.
 $$  
 T(N) = \begin{cases} 0, N=1\\4T(\frac{N}{2}) + N, N>1 \end{cases} 
@@ -186,7 +188,7 @@ $$
 T(N) = \begin{cases} 0, N=1\\2T(\frac{N}{4}) + 1, N>1 \end{cases} 
 $$
 
-Percebemos que agora $N$ está sendo dividido por 4, então assim vamos ter as seguintes substituições
+Nota-se na equação que sua chamada recursiva divide $N$ por 4, portanto levaremos isso em conta quando formos substituir valores na equação.
 
 $$\begin{aligned}
 T(1) = 0
@@ -211,4 +213,27 @@ S = \frac{1.(2^{log_4{N}} -1)}{2-1}
 Assim temos que
 $$
 T(N) = 2^{log_4{N}} -1
+$$
+
+### 5 -  T(N) = 4T(N/2) + N^2
+
+Essa equação também será resolvida pelo método da expanção.
+$$  
+T(N) = \begin{cases} 0, N=1\\4T(\frac{N}{2}) + N^2, N>1 \end{cases} 
+$$
+Substituindo valores na equação, teremos
+$$\begin{aligned}
+T(1) = 0
+\\\\
+T(2) = 4T(1) + 2^2 = 4
+\\\\
+T(4) = 4T(2) + 4^2 = 16 + 16
+\\\\
+T(8) = 4T(4) + 8^2 = 64 + 64 + 64
+\\\\
+T(16) = 4T(8) + 16^2 = 256 + 256 + 256 + 256
+\end{aligned}$$
+Analizando os resultados podemos identificar sem muitas dificuldades um padrão. Temos aqui $N^2$ que se repete $log_2{N}$. Portanto, temos que nossa equação de recorrência será
+$$
+T(N) = N^{2}.log_2{N}
 $$
