@@ -1,4 +1,6 @@
+import time
 import sys
+
 '''
 This limit prevents infinite recursion from causing an overflow of the C stack and crashing Python. 
 The highest possible limit is platform- dependent.
@@ -17,7 +19,6 @@ class PuzzleSolver():
 
     PUZZLE_SIZE = 9
     PUZZLE_COLS_ROWS = 3
-    possible_moves = [(1, 0), (-1, 0), (0, 1), (0,-1)]
 
     moves = 0
 
@@ -28,9 +29,9 @@ class PuzzleSolver():
 
         current_puzzle_state = self.initial_puzzle_state
 
+        start_time = time.time()
         self.backtrack(0, 1, current_puzzle_state, 0)
-        print("Acabou")
-
+        print("Puzzle resolvido em %s segundos" % (time.time() - start_time))
 
     def backtrack(self, empty_row, empty_col , puzzle, level):
         '''
@@ -44,31 +45,41 @@ class PuzzleSolver():
         self.save_puzzle_snapshot(snapshot)
 
         if snapshot == self.expected_puzzle_state:
-            print("Achei")
+            print(f"Resultado encontrado no nível {level}")
+            print(puzzle)
             return True
 
+        possible_moves = self.get_possible_moves(empty_row, empty_col)
+
         # itera sobre movimentos possíveis
-        for move in self.possible_moves:
+        for move in possible_moves:
+            new_row, new_col = move
 
-            row_move = move[0] + empty_row
-            if row_move < 0 or row_move > 2: # movimento inválido
-                continue
-
-            col_move = move[1] + empty_col
-            if col_move < 0 or col_move > 2: # movimento inválido
-                continue
+            puzzle[empty_row][empty_col] = puzzle[new_row][new_col]
+            puzzle[new_row][new_col] = '0'
+            level +=1
             
-            # faz movimento
-            print(puzzle[empty_row][empty_col])
-            puzzle[empty_row][empty_col] = puzzle[row_move][col_move]
-            puzzle[row_move][col_move] = '0'
-            print(puzzle)
-
-            level += 1
-            if self.backtrack(row_move, col_move, puzzle, level):
+            if self.backtrack(new_row, new_col, puzzle, level):
                 return True
-        
+            
+            puzzle[new_row][new_col] = puzzle[empty_row][empty_col]
+            puzzle[empty_row][empty_col] = '0'
+
         return False
+
+    def get_possible_moves(self, row, col):
+        possible_moves = [] 
+
+        if row > 0:
+            possible_moves.append((row - 1, col))
+        if col > 0:
+            possible_moves.append((row, col - 1))
+        if row < 2:
+            possible_moves.append((row + 1, col))
+        if col < 2:
+            possible_moves.append((row, col + 1))
+
+        return possible_moves
 
     def take_puzzle_snapshot(self, puzzle):
         '''
