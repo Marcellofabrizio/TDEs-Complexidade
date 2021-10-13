@@ -9,6 +9,7 @@ sys.setrecursionlimit(8192)
 
 class PuzzleSolver():
     
+    states_table = [False for i in range(876543210)]
     states_dict = {}
 
     initial_puzzle_state = [['8', '0', '6'],
@@ -22,8 +23,9 @@ class PuzzleSolver():
 
     moves = 0
 
-    def __init__(self, max_moves):
+    def __init__(self, max_moves, use_table=False):
         self.max_moves = max_moves
+        self.use_table = use_table
 
     def solve_puzzle(self):
 
@@ -100,18 +102,39 @@ class PuzzleSolver():
         Salva o snapshot tirado do puzzle em
         um dicionário
         '''
-        self.states_dict[snapshot] = True
+
+        if self.use_table:
+            self.states_table[int(snapshot)-1] = True
+
+        else:
+            self.states_dict[snapshot] = True
 
     def state_already_visited(self, snapshot):
         '''
         Verifica se estado já está presente
         no dicionário
         '''
-        if snapshot in self.states_dict:
-            return True
+
+        if self.use_table:
+            if self.states_table[int(snapshot)-1]:
+                return True
+            else:
+                return False
+
         else:
-            return False
+            if snapshot in self.states_dict:
+                return True
+            else:
+                return False
 
 if __name__ == '__main__':
+    # com tabela
+    print("============== Com tabela ==================")
+    solver = PuzzleSolver(100, True)
+    solver.solve_puzzle()
+    
+    # sem tabela 
+    print("============== Com Dicionário ==============")
+    print()
     solver = PuzzleSolver(100)
     solver.solve_puzzle()
