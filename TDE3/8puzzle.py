@@ -33,7 +33,7 @@ class PuzzleSolver():
 
         start_time = time.time()
         self.backtrack(0, 1, current_puzzle_state, 0)
-        print("Puzzle resolvido em %s segundos" % (time.time() - start_time))
+        print("Puzzle resolvido em {:0.10f} segundos".format(time.time() - start_time))
 
     def backtrack(self, empty_row, empty_col , puzzle, level):
         '''
@@ -133,8 +133,9 @@ if __name__ == '__main__':
     solver = PuzzleSolver(100, True)
     solver.solve_puzzle()
     
+    print()
+    
     # sem tabela 
     print("============== Com Dicionário ==============")
-    print()
     solver = PuzzleSolver(100)
     solver.solve_puzzle()
