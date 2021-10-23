@@ -9,12 +9,15 @@ sys.setrecursionlimit(8192)
 
 class PuzzleSolver():
     
-    states_table = [False for i in range(876543210)]
-    states_dict = {}
-
+    # Esse foi o exemplo dado na descrição do TDE
     initial_puzzle_state = [['8', '0', '6'],
                             ['5', '4', '7'],
                             ['2', '3', '1']]
+
+    # Esse não tem solução
+    # initial_puzzle_state = [['4', '7', '2'],
+    #                         ['5', '3', '8'],
+    #                         ['1', '0', '6']]
 
     expected_puzzle_state = '012345678'
 
@@ -26,21 +29,29 @@ class PuzzleSolver():
     def __init__(self, max_moves, use_table=False):
         self.max_moves = max_moves
         self.use_table = use_table
+        self.states_dict = {}
+
+        if use_table:
+            self.states_table = [False for i in range(876543210)]
+
 
     def solve_puzzle(self):
 
         current_puzzle_state = self.initial_puzzle_state
 
         start_time = time.time()
-        self.backtrack(0, 1, current_puzzle_state, 0)
-        print("Puzzle resolvido em {:0.10f} segundos".format(time.time() - start_time))
+        result = self.backtrack(0, 1, current_puzzle_state, 0)
+        if result: 
+            print("Puzzle resolvido em {:0.10f} segundos".format(time.time() - start_time))
+        else:
+            print("Nível máximo atingido")
 
     def backtrack(self, empty_row, empty_col , puzzle, level):
         '''
         Backtracking sinistro
         '''
         snapshot = self.take_puzzle_snapshot(puzzle)
-        
+
         if self.state_already_visited(snapshot) or level > self.max_moves:
             return False
 
@@ -128,14 +139,15 @@ class PuzzleSolver():
                 return False
 
 if __name__ == '__main__':
-    # com tabela
-    print("============== Com tabela ==================")
-    solver = PuzzleSolver(100, True)
-    solver.solve_puzzle()
     
-    print()
+    max_moves = 100
+
+    # Com tabela
+    # print("============== Com Tabela ==================")
+    # solver1 = PuzzleSolver(max_moves, True)
+    # solver1.solve_puzzle()
     
-    # sem tabela 
+    # Com dicionário (hash map)
     print("============== Com Dicionário ==============")
-    solver = PuzzleSolver(100)
-    solver.solve_puzzle()
+    solver2 = PuzzleSolver(max_moves)
+    solver2.solve_puzzle()
